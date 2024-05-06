@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.avatar {
+    width: 25px !important;
+    height: 25px !important;
+    font-size: 12px;
+    background: linear-gradient(138.62deg, #F3994A 14.17%, #B325E2 84.99%);
+
+}

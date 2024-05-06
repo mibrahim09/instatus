@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model ActivityLog {
+  id          Int            @id @default(autoincrement())
+  uuid        String         @unique @default(uuid()) @db.Uuid
+  actor_id    String
+  actor_name  String
+  group       String
+  action      EventAction?
+  target_id   String
+  target_name String
+  location    String
+  metadata    EventMetadata?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+model EventAction {
+  id          Int         @id @default(autoincrement())
+  uuid        String      @unique @default(uuid()) @db.Uuid
+  object      String
+  name        String
+  activityLog ActivityLog @relation(fields: [activity_id], references: [id])
+  activity_id Int         @unique
+}
+
+model EventMetadata {
+  id           Int         @id @default(autoincrement())
+  redirect     String
+  description  String
+  x_request_id String
+  activityLog  ActivityLog @relation(fields: [activity_id], references: [id])
+  activity_id  Int         @unique
+}
