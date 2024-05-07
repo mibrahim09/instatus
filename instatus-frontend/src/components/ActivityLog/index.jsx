@@ -24,7 +24,6 @@ export const ActivityLog = () => {
 
     useEffect(() => {
         if (!isLoading && lastSearch?.length > 0) {
-            console.log('data=', data)
             setArray(prevArr => [...prevArr, ...lastSearch])
             setLastSearch([])
         }
@@ -40,10 +39,10 @@ export const ActivityLog = () => {
         const originalPage = page;
         setPage(page + 1)
         await mutate()
-        if (data.length === 0) {
+        if (data?.length === 0) {
             setPage(originalPage)
         }
-    }, [])
+    }, [data, mutate, page])
 
     const handleChange = debounce((event) => {
         setSearchTerm(event.target.value);
